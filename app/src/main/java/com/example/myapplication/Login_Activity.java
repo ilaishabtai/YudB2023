@@ -48,8 +48,6 @@ public class Login_Activity extends AppCompatActivity {
             Toast.makeText(Login_Activity.this, "Register Failed", Toast.LENGTH_LONG).show();
         }
        }
-    }
-    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void login(View view) { //פעולה המאפשרת כניסה למשתמש קיים במערכת של ה- פייר בייס
         EditText emailEditText = findViewById(R.id.editEmailAddress);
