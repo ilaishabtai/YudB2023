@@ -35,6 +35,10 @@ android {
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.android.volley:volley:1.1.1")
+    implementation("com.google.android.gms:play-service-location:17.0.0")
+
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
