@@ -39,31 +39,32 @@ public class Login_Activity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(
                 emailEditText.getText().toString(),passwordEditText.getText().toString())
         .addOnCompleteListener(Login_Activity.this, new OnCompleteListener<AuthResult>() {
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            startActivity(new Intent(Login_Activity.this, MainActivity.class));
-        }
-        else {
-            Toast.makeText(Login_Activity.this, "Register Failed", Toast.LENGTH_LONG).show();
-        }
-       }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void login(View view) { //פעולה המאפשרת כניסה למשתמש קיים במערכת של ה- פייר בייס
-        EditText emailEditText = findViewById(R.id.editEmailAddress);
-        EditText passwordEditText = findViewById(R.id.editTextPassword);
-        mAuth.signInWithEmailAndPassword(
-                emailEditText.getText().toString(),passwordEditText.getText().toString())
-                .addOnCompleteListener(Login_Activity.this, new OnCompleteListener<AuthResult>() {
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            startActivity(new Intent(Login_Activity.this, MainActivity.class));
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    startActivity(new Intent(Login_Activity.this, MainActivity.class));
+                } else {
+                    Toast.makeText(Login_Activity.this, "Register Failed", Toast.LENGTH_LONG).show();
+                }
             }
-        else {
-            Toast.makeText(Login_Activity.this, "Login Failed", Toast.LENGTH_LONG).show();
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public void login(View view) { //פעולה המאפשרת כניסה למשתמש קיים במערכת של ה- פייר בייס
+                EditText emailEditText = findViewById(R.id.editEmailAddress);
+                EditText passwordEditText = findViewById(R.id.editTextPassword);
+                mAuth.signInWithEmailAndPassword(
+                                emailEditText.getText().toString(), passwordEditText.getText().toString())
+                        .addOnCompleteListener(Login_Activity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    startActivity(new Intent(Login_Activity.this, MainActivity.class));
+                                } else {
+                                    Toast.makeText(Login_Activity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
             }
-        }
-    });
-    }
+        });
+    };
 }
