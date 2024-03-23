@@ -36,7 +36,7 @@ public class Login_Activity extends AppCompatActivity {
     public void register(View view) { //פעולה המאפשרת הרשמה של משתמש חדש במערכת ורושמת אותו ב-פייר בייס
         EditText emailEditText = findViewById(R.id.editEmailAddress);
         EditText passwordEditText = findViewById(R.id.editTextPassword);
-        mAuth.signInWithEmailAndPassword(
+        mAuth.createUserWithEmailAndPassword(
                 emailEditText.getText().toString(),passwordEditText.getText().toString())
         .addOnCompleteListener(Login_Activity.this, new OnCompleteListener<AuthResult>() {
             @Override
