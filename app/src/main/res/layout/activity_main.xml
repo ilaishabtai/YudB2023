@@ -7,31 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ProgressBar
+    <TextView
+        android:id="@+id/forecastDataTv"
+        android:layout_width="241dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="44dp"
+        android:text="Today's Weather Forecast:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/tempratureCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/PBLoading"
-        android:visibility="visible"
-        android:layout_centerInParent="true"
-        tools:ignore="MissingConstraints" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/RLHome"
-        android:visibility="gone"
-        />
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="23"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/main_wallpaper"
-        android:contentDescription="TODO" />
+        app:layout_constraintTop_toBottomOf="@+id/cityNameText"
+        app:layout_constraintVertical_bias="0.145" />
+
+
+    <TextView
+        android:id="@+id/feelsLikeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="23"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempratureCounter"
+        app:layout_constraintVertical_bias="0.125" />
+
     <Button
         android:id="@+id/logOut_button"
         android:layout_width="wrap_content"
@@ -40,117 +54,45 @@
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.816" />
+
+    <EditText
+        android:id="@+id/enterCityNameText"
+        android:layout_width="251dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Enter City Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
-    <TextView
-        android:id="@+id/CityName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="City Name"
-        android:textAlignment="center"
-        android:fontFamily="sans-serif"
-        android:textSize="35dp"
-        tools:ignore="MissingConstraints" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/LLEdt"
-        android:layout_below="@id/CityName"
-        android:weightSum="5"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.086" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TILCity"
-        android:layout_width="427dp"
-        android:layout_height="80dp"
-        android:layout_margin="10dp"
-        android:layout_weight="5"
-        android:background="@android:color/transparent"
-        android:hint="Enter City Name Here:"
-        android:padding="5dp"
-        android:textColorHint="@color/white"
-        app:hintTextColor="@color/white"
-        tools:ignore="MissingConstraints"
-        />
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/EDtCity"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            />
-        <ImageView
-            android:id="@+id/IVSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
-            android:background="@android:color/transparent"
-            android:src="drawable/ic_search"
-            app:tint="@color/white"
-            tools:ignore="MissingConstraints" />
     <TextView
-        android:id="@+id/TVTemprature"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/LLEdt"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:text="23"
-        android:textColor="@color/white"
-        android:textSize="70dp"
-        tools:ignore="MissingConstraints" />
-    <ImageView
-        android:id="@+id/IVIcon"
+        android:id="@+id/cityNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/TVTemprature"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:src="@mipmap/ic_launcher"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginTop="20dp"
+        android:text="City Name"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterCityNameText" />
+
     <TextView
-        android:id="@+id/TVCondition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:text="Condition"
-        android:textColor="@color/white"
-        android:layout_below="@id/IVIcon"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Today's Weather Forecast"
-        android:textColor="@color/white"
-        android:layout_above="@id/RvWeather"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/RvWeather"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:ignore="MissingConstraints" />
-
-
-
+        android:id="@+id/textView"
+        android:layout_width="241dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="116dp"
+        android:text="Today's Weather Forecast:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempratureCounter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
