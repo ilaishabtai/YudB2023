@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
 
     private LocationService locationService;
-    double lon = 34.8232036;
-    double lat = 31.96957;
+    double lon = 37.8232036;
+    double lat = 32.96957;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,42 +58,49 @@ public class MainActivity extends AppCompatActivity {
         locationService.requestLocationUpdates(location -> {
             lat = location.getLatitude();
             lon = location.getLongitude();
-        });
+       /**
+       * Create the API service with the Retrofit Client and the WeatherApiService
+       */
+       WeatherApiService apiService = OpenWeatherApiRetrofitClient.getClient().create(WeatherApiService.class);
+       Call<WeatherData> call = apiService.getCurrentWeatherByCoordinates(lat, lon, API_KEY);
+       call.enqueue(new Callback<WeatherData>() {
+           @Override
+           public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
+               if (response.isSuccessful()) {
+                  WeatherData weatherResponse = response.body();
+                  if (weatherResponse != null) {
+                      // Handle weather data here
+                      String feels_like = String.valueOf(((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
+                      String city = weatherResponse.getName();
+                      String temp = String.valueOf((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getTemp()));
+                      String forecastString = getForecastString(weatherResponse);
+                      temperatureTv.setText(temp);
+                      feelsLikeTv.setText("Feels like: " + feels_like);
+                      cityTv.setText(city);
+                      forecastDataTv.setText(forecastString);
+                      Log.d("WeatherData", weatherResponse.getWeather().toString());
+                  }
+               } else {
+                   debuggingTextView.setText(response.message() + ": " + response.body() + ": " + response.code());
 
-        /**
-         * Create the API service with the Retrofit Client and the WeatherApiService
-         */
-        WeatherApiService apiService = OpenWeatherApiRetrofitClient.getClient().create(WeatherApiService.class);
-        Call<WeatherData> call = apiService.getCurrentWeatherByCoordinates(lat, lon, API_KEY);
-        call.enqueue(new Callback<WeatherData>() {
-            @Override
-            public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-                if (response.isSuccessful()) {
-                    WeatherData weatherResponse = response.body();
-                    if (weatherResponse != null) {
-                        // Handle weather data here
-                        String feels_like = String.valueOf(((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
-                        String city = weatherResponse.getName();
-                        String temp = String.valueOf((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getTemp()));
-                        String forecastString = getForecastString(weatherResponse);
-                        temperatureTv.setText(temp);
-                        feelsLikeTv.setText("Feels like: " + feels_like);
-                        cityTv.setText(city);
-                        forecastDataTv.setText(forecastString);
-                        Log.d("WeatherData", weatherResponse.getWeather().toString());
-                    }
-                } else {
-                    debuggingTextView.setText(response.message() + ": " + response.body() + ": " + response.code());
+               }
+           }
+
+                @Override
+                public void onFailure(Call<WeatherData> call, Throwable t) {
 
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<WeatherData> call, Throwable t) {
 
-            }
+
+
+
+
+            locationService.removeLocationUpdates();
         });
-    }
+
+            }
 
     private String getForecastString(WeatherData weatherResponse) {
         StringBuilder responseString = new StringBuilder();
@@ -117,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         forecastDataTv = findViewById(R.id.forecastDataTv);
         feelsLikeTv = findViewById(R.id.feelsLikeTv);
     }
-
     public void logout(View view) {
        FirebaseAuth.getInstance().signOut();
        startActivity(new Intent(this, Login_Activity.class));
