@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/firRecTitleTv" />
 
     <TextView
         android:id="@+id/tempratureCounter"
@@ -47,7 +47,7 @@
         app:layout_constraintVertical_bias="0.125" />
 
     <Button
-        android:id="@+id/logOut_button"
+        android:id="@+id/logOutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="logout"
@@ -56,36 +56,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/firRecTitleTv"
         app:layout_constraintVertical_bias="0.816" />
 
-    <EditText
-        android:id="@+id/enterCityNameText"
-        android:layout_width="251dp"
-        android:layout_height="59dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Enter City Name"
+    <Button
+        android:id="@+id/logOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="fitRec"
+        android:text="FitRec"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.792"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086" />
+        app:layout_constraintTop_toBottomOf="@+id/firRecTitleTv"
+        app:layout_constraintVertical_bias="0.817" />
 
     <TextView
         android:id="@+id/cityNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="City Name"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterCityNameText" />
+        tools:layout_editor_absoluteY="137dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/firRecTitleTv"
         android:layout_width="241dp"
         android:layout_height="26dp"
         android:layout_marginTop="116dp"

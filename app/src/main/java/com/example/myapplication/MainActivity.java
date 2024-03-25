@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
 
     private LocationService locationService;
-    double lon = 37.8232036;
-    double lat = 32.96957;
+    double lon = 37.8232036; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
+    double lat = 32.96957; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,5 +128,9 @@ public class MainActivity extends AppCompatActivity {
        FirebaseAuth.getInstance().signOut();
        startActivity(new Intent(this, Login_Activity.class));
        finish();
+    }
+    public void fitRec(View view) {
+        startActivity(new Intent(this, FitRecActivity.class));
+        finish();
     }
 }
