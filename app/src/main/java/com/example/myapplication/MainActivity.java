@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     double lon = 37.8232036; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
     double lat = 32.96957; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
 
+    int Temp = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                if (response.isSuccessful()) {
                   WeatherData weatherResponse = response.body();
                   if (weatherResponse != null) {
+                      Temp=((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like()));
                       // Handle weather data here
                       String feels_like = String.valueOf(((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
                       String city = weatherResponse.getName();
@@ -130,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
        finish();
     }
     public void fitRec(View view) {
+        Intent intent= new Intent(this,FitRecActivity.class);
+        intent.putExtra("Temp",Temp);
         startActivity(new Intent(this, FitRecActivity.class));
         finish();
     }
