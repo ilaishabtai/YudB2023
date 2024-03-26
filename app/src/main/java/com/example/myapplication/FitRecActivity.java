@@ -38,11 +38,12 @@ public class FitRecActivity extends AppCompatActivity {
         recommendationTv=findViewById(R.id.RecommendationTv);
         recommendationTv.setOnClickListener(view->{
 
-            textToSpeech.speak(recommendationTv.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(recommendationTv.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,null);
         });
         Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
         if(intent!=null) {
-            int recived = intent.getIntExtra("Temp",0);
+            int recived = extras.getInt("Temp");
             try {
                 String range = translateToRange(recived);
                 getRecommendation(range);

@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     public void fitRec(View view) {
         Intent intent= new Intent(this,FitRecActivity.class);
         intent.putExtra("Temp",Temp);
-        startActivity(new Intent(this, FitRecActivity.class));
+        startActivity(intent);
         finish();
     }
 }
