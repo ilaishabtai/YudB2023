@@ -43,20 +43,23 @@ public class MainActivity extends AppCompatActivity {
 
     int Temp = 0;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    //////////////////////////////////////////////////////////////////////////////////
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) ->
+        {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-
+        }
+    );
         bindViews();
-
         locationService = new LocationService(this);
-        locationService.requestLocationUpdates(location -> {
+        locationService.requestLocationUpdates(location ->
+        {
             lat = location.getLatitude();
             lon = location.getLongitude();
        /**
@@ -64,12 +67,16 @@ public class MainActivity extends AppCompatActivity {
        */
        WeatherApiService apiService = OpenWeatherApiRetrofitClient.getClient().create(WeatherApiService.class);
        Call<WeatherData> call = apiService.getCurrentWeatherByCoordinates(lat, lon, API_KEY);
-       call.enqueue(new Callback<WeatherData>() {
+       call.enqueue(new Callback<WeatherData>()
+       {
            @Override
-           public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-               if (response.isSuccessful()) {
+           public void onResponse(Call<WeatherData> call, Response<WeatherData> response)
+           {
+               if (response.isSuccessful())
+               {
                   WeatherData weatherResponse = response.body();
-                  if (weatherResponse != null) {
+                  if (weatherResponse != null)
+                  {
                       Temp=((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like()));
                       // Handle weather data here
                       String feels_like = String.valueOf(((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
@@ -82,56 +89,60 @@ public class MainActivity extends AppCompatActivity {
                       forecastDataTv.setText(forecastString);
                       Log.d("WeatherData", weatherResponse.getWeather().toString());
                   }
-               } else {
+               }
+               else
+               {
                    debuggingTextView.setText(response.message() + ": " + response.body() + ": " + response.code());
-
                }
            }
-
                 @Override
-                public void onFailure(Call<WeatherData> call, Throwable t) {
+                public void onFailure(Call<WeatherData> call, Throwable t)
+                {
 
                 }
-            });
-
-
-
-
-
-
-            locationService.removeLocationUpdates();
-        });
-
             }
-
-    private String getForecastString(WeatherData weatherResponse) {
+            );
+            locationService.removeLocationUpdates();
+        }
+        );
+            }
+    //////////////////////////////////////////////////////////////////////////////////
+    private String getForecastString(WeatherData weatherResponse)
+    {
         StringBuilder responseString = new StringBuilder();
 
-        if (weatherResponse.getMain() != null) {
+        if (weatherResponse.getMain() != null)
+        {
             responseString.append(WeatherUtils.getHowColdHumanReadable(WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
             responseString.append("\n");
         }
 
-        if (weatherResponse.getWind() != null) {
+        if (weatherResponse.getWind() != null)
+        {
             responseString.append(WeatherUtils.windScale(weatherResponse.getWind().getSpeed()));
             responseString.append("\n");
         }
 
         return responseString.toString();
     }
-
-    private void bindViews() {
+    //////////////////////////////////////////////////////////////////////////////////
+    private void bindViews()
+    {
         temperatureTv = findViewById(R.id.tempratureCounter);
         cityTv = findViewById(R.id.cityNameText);
         forecastDataTv = findViewById(R.id.forecastDataTv);
         feelsLikeTv = findViewById(R.id.feelsLikeTv);
     }
-    public void logout(View view) {
+    //////////////////////////////////////////////////////////////////////////////////
+    public void logout(View view)
+    {
        FirebaseAuth.getInstance().signOut();
        startActivity(new Intent(this, Login_Activity.class));
        finish();
     }
-    public void fitRec(View view) {
+    //////////////////////////////////////////////////////////////////////////////////
+    public void fitRec(View view)
+    {
         Intent intent= new Intent(this,FitRecActivity.class);
         intent.putExtra("Temp",Temp);
         startActivity(intent);
