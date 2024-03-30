@@ -34,11 +34,11 @@ public class FitRecActivity extends AppCompatActivity {
             return insets;
 
         });
-        textToSpeech=new TextToSpeech(this,listner->{});
-        recommendationTv=findViewById(R.id.RecommendationTv);
+        textToSpeech=new TextToSpeech(this,listner->{}); //יצירת משתנה להגדרת הtps
+        recommendationTv=findViewById(R.id.RecommendationTv); //הגדרת ההמלצה כמשתנה לפי הטקסט
         recommendationTv.setOnClickListener(view->{
 
-            textToSpeech.speak(recommendationTv.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,null);
+            textToSpeech.speak(recommendationTv.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,null); //הפעלת הדיבור ברגע שלוחצים על המלל בהמלצת הלבוש
         });
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -53,12 +53,12 @@ public class FitRecActivity extends AppCompatActivity {
         }
 
     }
-    public String translateToRange(int number) {
+    public String translateToRange(int number) { //הגדרת הטווח של התאמת הלבוש מ-1 עד 10
         int lowerBound = (number / 10) * 10;
         int upperBound = lowerBound + 10;
         return lowerBound + "-" + upperBound;
     }
-    public void getRecommendation(String temp)
+    public void getRecommendation(String temp) //פעולה המוציאה פריט לבוש מה- firestore ומציגה אותו כטקסט
     {
         db.collection("clothes").document(temp).get().addOnCompleteListener(task->{
             DocumentSnapshot documentSnapshot= task.getResult();
