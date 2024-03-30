@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                       String temp = String.valueOf((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getTemp()));
                       String forecastString = getForecastString(weatherResponse);
                       temperatureTv.setText(temp);
-                      feelsLikeTv.setText("Feels like: " + feels_like);
+                      feelsLikeTv.setText(feels_like);
                       cityTv.setText(city);
                       forecastDataTv.setText(forecastString);
                       Log.d("WeatherData", weatherResponse.getWeather().toString());

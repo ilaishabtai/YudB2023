@@ -7,7 +7,19 @@
     tools:context=".Login_Activity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/weatherAppIcon"
+        android:layout_width="86dp"
+        android:layout_height="102dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.071"
+        app:srcCompat="@drawable/app_icon" />
+
+    <ImageView
+        android:id="@+id/wallpaper2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,8 +58,8 @@
         android:textColorHint="#23BCFD"
         android:textColorLink="#23BCFD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/wallpaper2"
+        app:layout_constraintStart_toStartOf="@+id/wallpaper2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.54" />
 
@@ -60,7 +72,8 @@
         android:shadowColor="#23BDFE"
         android:text="Login"
         android:textColor="#94E5FD"
-        android:textColorLink="#49454F"
+        android:textColorHighlight="#94E5FD"
+        android:textColorLink="#94E5FD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.702"
@@ -76,8 +89,8 @@
         android:onClick="register"
         android:text="Register"
         android:textColor="#95E6FE"
-        android:textColorHighlight="#23BDFE"
-        android:textColorLink="#23BDFE"
+        android:textColorHighlight="#94E5FD"
+        android:textColorLink="#94E5FD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.311"
