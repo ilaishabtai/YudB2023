@@ -74,22 +74,22 @@ public class FitRecActivity extends AppCompatActivity {
     public void getRecommendation(String temp) //פעולה המוציאה פריט לבוש מה- firestore ומציגה אותו כטקסט
     {
         db.collection("clothes").document(temp).get().addOnCompleteListener(task->{
-            DocumentSnapshot documentSnapshot= task.getResult();
+            DocumentSnapshot documentSnapshot= task.getResult(); //משיג את הדוח מה-Firestore
             if (documentSnapshot.exists())
             {
                 Map<String,Object> data = documentSnapshot.getData();
                 if (data!=null && !data.isEmpty())
                 {
-                    Random random = new Random();
-                    int randomIndex= random.nextInt(data.size());
+                    Random random = new Random(); //יצירת משתנה רנדומלי מתוך הקטגוריה לפי הטמפרטורה
+                    int randomIndex= random.nextInt(data.size()); //הגדרת המשתנה הרנדומלי
                     Object randomValue= data.get(String.valueOf(randomIndex));
                     if (randomValue!=null)
                     {
-                        recommendationTv.setText(randomValue.toString());
+                        recommendationTv.setText(randomValue.toString()); //הגדרת הטקסט לפי המספר הרנדומלי
                     }
                     else
                     {
-                        recommendationTv.setText("Error");
+                        recommendationTv.setText("Error"); //הצגת שגיאה
                     }
 
                 }

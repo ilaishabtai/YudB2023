@@ -31,17 +31,17 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     //    String API_KEY = BuildConfig.OPENWEATHER_API_KEY;
-    String API_KEY = "dfb4398b9f339a0fa1e62dafdd95d4fd";
+    String API_KEY = "dfb4398b9f339a0fa1e62dafdd95d4fd"; //מפתח api לשימוש במידע על מזג האוויר
     TextView debuggingTextView;
     TextView temperatureTv, cityTv, forecastDataTv, feelsLikeTv;
-    int LOCATION_REFRESH_TIME = 15000; // 15 seconds to update
-    int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
+    int LOCATION_REFRESH_TIME = 15000; // עדכון המיקום כל 15 שניות
+    int LOCATION_REFRESH_DISTANCE = 500; // עדכון המיקום כל 500 מטר
 
-    private LocationService locationService;
+    private LocationService locationService; //הגדרת משתמש שישמש למיקום
     double lon = 37.8232036; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
     double lat = 32.96957; //ערך לדוגמא עד להגדרת המשתנה לפי מיקום
 
-    int Temp = 0;
+    int Temp = 0; //ערך לדוגמא לטמפ'
     @Override
     //////////////////////////////////////////////////////////////////////////////////
     protected void onCreate(Bundle savedInstanceState)
@@ -57,14 +57,12 @@ public class MainActivity extends AppCompatActivity {
         }
     );
         bindViews();
-        locationService = new LocationService(this);
-        locationService.requestLocationUpdates(location ->
+        locationService = new LocationService(this); //הגדרת המיקום
+        locationService.requestLocationUpdates(location -> //שימוש במיקום לפי קווי אורך ורוחב
         {
-            lat = location.getLatitude();
-            lon = location.getLongitude();
-       /**
-       * Create the API service with the Retrofit Client and the WeatherApiService
-       */
+            lat = location.getLatitude(); //קו רוחב - הגדרה
+            lon = location.getLongitude(); //קו אורך - הגדרה
+       //שימוש ב-api key על מנת להציג את התחזית
        WeatherApiService apiService = OpenWeatherApiRetrofitClient.getClient().create(WeatherApiService.class);
        Call<WeatherData> call = apiService.getCurrentWeatherByCoordinates(lat, lon, API_KEY);
        call.enqueue(new Callback<WeatherData>()
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                   if (weatherResponse != null)
                   {
                       Temp=((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like()));
-                      // Handle weather data here
+                      // מידע על מזג האוויר מוצג כאן:
                       String feels_like = String.valueOf(((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
                       String city = weatherResponse.getName();
                       String temp = String.valueOf((int) WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getTemp()));
@@ -102,22 +100,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             );
-            locationService.removeLocationUpdates();
+            locationService.removeLocationUpdates(); //הסרת עדכוני מיקום - שיהיה חד פעמי לשימוש
         }
         );
             }
     //////////////////////////////////////////////////////////////////////////////////
-    private String getForecastString(WeatherData weatherResponse)
+    private String getForecastString(WeatherData weatherResponse) //הצגת מידע על התחזית
     {
         StringBuilder responseString = new StringBuilder();
 
-        if (weatherResponse.getMain() != null)
+        if (weatherResponse.getMain() != null) //כל עוד יש מידע בתחזית
         {
             responseString.append(WeatherUtils.getHowColdHumanReadable(WeatherUtils.kelvinToCelsius(weatherResponse.getMain().getFeels_like())));
             responseString.append("\n");
         }
 
-        if (weatherResponse.getWind() != null)
+        if (weatherResponse.getWind() != null) //כל עוד יש מידע לגבי רוחות
         {
             responseString.append(WeatherUtils.windScale(weatherResponse.getWind().getSpeed()));
             responseString.append("\n");
@@ -128,20 +126,20 @@ public class MainActivity extends AppCompatActivity {
     //////////////////////////////////////////////////////////////////////////////////
     private void bindViews()
     {
-        temperatureTv = findViewById(R.id.tempratureCounter);
-        cityTv = findViewById(R.id.cityNameText);
-        forecastDataTv = findViewById(R.id.forecastDataTv);
-        feelsLikeTv = findViewById(R.id.feelsLikeTv);
+        temperatureTv = findViewById(R.id.tempratureCounter); //הגדרת מס' המעלות
+        cityTv = findViewById(R.id.cityNameText); //הגדרת העיר - לפי המיקום
+        forecastDataTv = findViewById(R.id.forecastDataTv); //הגדרת התחזית
+        feelsLikeTv = findViewById(R.id.feelsLikeTv); //הגדרה איך המעלות מרגישות בפועל
     }
     //////////////////////////////////////////////////////////////////////////////////
-    public void logout(View view)
+    public void logout(View view) //מעבר לעמוד הכניסה
     {
        FirebaseAuth.getInstance().signOut();
        startActivity(new Intent(this, Login_Activity.class));
        finish();
     }
     //////////////////////////////////////////////////////////////////////////////////
-    public void fitRec(View view)
+    public void fitRec(View view) //מעבר לעמוד התאמת הלבוש
     {
         Intent intent= new Intent(this,FitRecActivity.class);
         intent.putExtra("Temp",Temp);
