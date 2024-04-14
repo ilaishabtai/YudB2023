@@ -24,6 +24,11 @@ import com.example.myapplication.services.OpenWeatherApiRetrofitClient;
 import com.example.myapplication.services.WeatherApiService;
 import com.example.myapplication.utils.WeatherUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     //    String API_KEY = BuildConfig.OPENWEATHER_API_KEY;
     String API_KEY = "dfb4398b9f339a0fa1e62dafdd95d4fd"; //מפתח api לשימוש במידע על מזג האוויר
     TextView debuggingTextView;
+    FirebaseFirestore db = FirebaseFirestore.getInstance(); //יצירת משתנה שמקשר אותנו ל-Firestore
     TextView temperatureTv, cityTv, forecastDataTv, feelsLikeTv;
     int LOCATION_REFRESH_TIME = 15000; // עדכון המיקום כל 15 שניות
     int LOCATION_REFRESH_DISTANCE = 500; // עדכון המיקום כל 500 מטר
@@ -103,7 +109,35 @@ public class MainActivity extends AppCompatActivity {
             locationService.removeLocationUpdates(); //הסרת עדכוני מיקום - שיהיה חד פעמי לשימוש
         }
         );
+        updateLoginLabel();
             }
+
+    private void updateLoginLabel() {
+        TextView loginText=findViewById(R.id.numberLogin);
+        String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        db.collection("logins").document(userId).get().addOnCompleteListener(task->{
+            if(task.isSuccessful())
+            {
+                DocumentSnapshot Document=task.getResult();
+                if(Document.exists())
+                {
+                    long LoginCount=Document.getLong("loginCount");
+                    db.collection("logins").document(userId).update("loginCount",LoginCount+1);
+                    loginText.setText(loginText.getText()+" "+LoginCount);
+                }
+                else
+                {
+                    Map<String,Object> user=new HashMap<>();
+                    user.put("loginCount",1);
+                    db.collection("logins").document(userId).set(user);
+                    loginText.setText(loginText.getText()+" "+1);
+                }
+            }
+        });
+
+
+    }
+
     //////////////////////////////////////////////////////////////////////////////////
     private String getForecastString(WeatherData weatherResponse) //הצגת מידע על התחזית
     {

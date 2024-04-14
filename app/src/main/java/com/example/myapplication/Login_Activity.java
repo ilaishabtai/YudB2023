@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.services.LocationService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Login_Activity extends AppCompatActivity {
+    private LocationService locationService; //הגדרת משתמש שישמש למיקום
     private FirebaseAuth mAuth; //יצירת משתמש של Firebase על מנת לבצע אימות משתמש במייל וסיסמא
     @Override
     //////////////////////////////////////////////////////////////////////////////////
@@ -24,6 +26,8 @@ public class Login_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance(); //קישור המשתנה למערכת הAuth של Firebase
+        locationService = new LocationService(this); //הגדרת המיקום
+        locationService.requestLocationUpdates(null);
     }
     //////////////////////////////////////////////////////////////////////////////////
     @Override
