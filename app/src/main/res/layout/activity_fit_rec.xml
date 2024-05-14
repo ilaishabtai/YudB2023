@@ -72,27 +72,9 @@
         android:textColorLink="#94E5FD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
-
-    <Button
-        android:id="@+id/mainBtn"
-        android:layout_width="98dp"
-        android:layout_height="39dp"
-        android:background="#FF23BDFE"
-        android:onClick="backMain"
-        android:text="back"
-        android:textColor="#94E5FD"
-        android:textColorHighlight="#94E5FD"
-        android:textColorLink="#94E5FD"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686" />
+        app:layout_constraintVertical_bias="0.682" />
 
     <TextView
         android:id="@+id/RecommendationTv"

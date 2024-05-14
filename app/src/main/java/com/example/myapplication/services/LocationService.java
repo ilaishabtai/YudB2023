@@ -51,15 +51,4 @@ public class LocationService implements LocationListener{
         }
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-    }
 }
