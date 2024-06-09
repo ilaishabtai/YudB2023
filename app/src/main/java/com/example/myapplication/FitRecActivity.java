@@ -17,24 +17,24 @@ import java.util.Map;
 
 public class FitRecActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private TextToSpeech textToSpeech;
-    private TextView recommendationTv;
+    private TextToSpeech textToSpeech; //יצירת משתנה TPS
+    private TextView recommendationTv; //יצירת משתנה TV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fit_rec);
 
-        initializeTextToSpeech();
+        initializeTextToSpeech(); //התקנה של TPS
         initializeUI();
 
         handleIntent(getIntent());
     }
 
     private void initializeTextToSpeech() {
-        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> { //הגדרת המשתנה
             if (status != TextToSpeech.ERROR) {
-                textToSpeech.setLanguage(Locale.UK);
+                textToSpeech.setLanguage(Locale.UK); //הגדרת השפה
             }
         });
     }
@@ -42,7 +42,7 @@ public class FitRecActivity extends AppCompatActivity {
     private void initializeUI() {
         recommendationTv = findViewById(R.id.RecommendationTv);
         recommendationTv.setOnClickListener(view -> textToSpeech.speak(
-                recommendationTv.getText().toString(),
+                recommendationTv.getText().toString(), //ההגדרה בזמן הלחיצה להפעלת הדיבור
                 TextToSpeech.QUEUE_FLUSH,
                 null,
                 null
@@ -57,14 +57,14 @@ public class FitRecActivity extends AppCompatActivity {
                 try {
                     getRecommendation(String.valueOf(received));
                 } catch (Exception e) {
-                    recommendationTv.setText(e.getMessage());
+                    recommendationTv.setText(e.getMessage()); //הגדרת ההמלצה כמה שמוכן מה-API
                 }
             }
         }
     }
 
     public String translateToRange(int number) {
-        int lowerBound = (number / 10) * 10;
+        int lowerBound = (number / 10) * 10; //הגדרת הטווח לFIRESTORE
         int upperBound = lowerBound + 10;
         return lowerBound + "-" + upperBound;
     }
@@ -92,14 +92,9 @@ public class FitRecActivity extends AppCompatActivity {
         });
     }
 
-    public void logout(View view) {
+    public void logout(View view) { // חזרה למסך הכניסה
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this, Login_Activity.class));
-        finish();
-    }
-
-    public void backMain(View view) {
-        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

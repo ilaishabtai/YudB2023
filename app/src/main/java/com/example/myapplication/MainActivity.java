@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void bindViews() {
+    private void bindViews() { //הגדרת המשתנים
         //debuggingTextView = findViewById(R.id.debuggingTextView);
         temperatureTv = findViewById(R.id.tempratureCounter);
         cityTv = findViewById(R.id.cityNameText);
@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
             lat = location.getLatitude();
             lon = location.getLongitude();
             fetchWeatherData(lat, lon);
-            locationService.removeLocationUpdates(); // Single-use location update
+            locationService.removeLocationUpdates(); // שימוש במיקום האחרון
         });
     }
 
-    private void fetchWeatherData(double latitude, double longitude) {
+    private void fetchWeatherData(double latitude, double longitude) { //שימוש ב-API KEY ושאר המיקומים
         WeatherApiService apiService = OpenWeatherApiRetrofitClient.getClient().create(WeatherApiService.class);
         Call<WeatherData> call = apiService.getCurrentWeatherByCoordinates(latitude, longitude, API_KEY);
         call.enqueue(new Callback<WeatherData>() {
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateWeatherUI(WeatherData weatherData) {
+    private void updateWeatherUI(WeatherData weatherData) { //הגדרת המעלות וכל המשתנים מה-API
         temp = (int) WeatherUtils.kelvinToCelsius(weatherData.getMain().getFeels_like());
         String feelsLike = String.valueOf(temp);
         String city = weatherData.getName();
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("WeatherData", weatherData.getWeather().toString());
     }
 
-    private String getForecastString(WeatherData weatherData) {
+    private String getForecastString(WeatherData weatherData) { //הבאת הנתונים מתוך ה-API
         StringBuilder forecast = new StringBuilder();
 
         if (weatherData.getMain() != null) {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         return forecast.toString();
     }
 
-    private void updateLoginLabel() {
+    private void updateLoginLabel() { //עדכון תווית הכניסה לפי כמות הפעמים שהמשתמש דורך בעמוד זה
         TextView loginText = findViewById(R.id.numberLogin);
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -155,13 +155,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void logout(View view) {
+    public void logout(View view) { //מעבר לעמוד ה-LOG OUT
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this, Login_Activity.class));
         finish();
     }
 
-    public void fitRec(View view) {
+    public void fitRec(View view) { //מעבר לעמוד התאמת הלבוש
         Intent intent = new Intent(this, FitRecActivity.class);
         intent.putExtra("Temp", temp);
         startActivity(intent);
