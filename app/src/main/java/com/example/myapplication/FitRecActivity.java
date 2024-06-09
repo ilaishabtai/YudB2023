@@ -6,105 +6,99 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 
 public class FitRecActivity extends AppCompatActivity {
-    FirebaseFirestore db = FirebaseFirestore.getInstance(); //יצירת משתנה שמקשר אותנו ל-Firestore
-    private TextToSpeech textToSpeech; //יצירת משתנה מסוג Tps
-    private TextView recommendationTv; //יצירת משתנה מסוג Tv
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextToSpeech textToSpeech;
+    private TextView recommendationTv;
+
     @Override
-    //////////////////////////////////////////////////////////////////////////////////
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_fit_rec);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) ->
-        {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
 
-        }
-        );
-        textToSpeech=new TextToSpeech(this,listner->{}); //יצירת משתנה להגדרת הtps
-        recommendationTv=findViewById(R.id.RecommendationTv); //הגדרת ההמלצה כמשתנה לפי הטקסט
-        recommendationTv.setOnClickListener(view->
-        {
+        initializeTextToSpeech();
+        initializeUI();
 
-            textToSpeech.speak(recommendationTv.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,null); //הפעלת הדיבור ברגע שלוחצים על המלל בהמלצת הלבוש
-        }
-        );
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (intent!=null)
-        {
-            int recived = extras.getInt("Temp");
-            try
-            {
-                getRecommendation(String.valueOf(recived));
-            }
-            catch (Exception e)
-            {
-                recommendationTv.setText(e.getMessage());
-            }
-        }
-
+        handleIntent(getIntent());
     }
-    //////////////////////////////////////////////////////////////////////////////////
-    public String translateToRange(int number) //הגדרת הטווח של התאמת הלבוש מ-1 עד 10
-    {
+
+    private void initializeTextToSpeech() {
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.UK);
+            }
+        });
+    }
+
+    private void initializeUI() {
+        recommendationTv = findViewById(R.id.RecommendationTv);
+        recommendationTv.setOnClickListener(view -> textToSpeech.speak(
+                recommendationTv.getText().toString(),
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                null
+        ));
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                int received = extras.getInt("Temp");
+                try {
+                    getRecommendation(String.valueOf(received));
+                } catch (Exception e) {
+                    recommendationTv.setText(e.getMessage());
+                }
+            }
+        }
+    }
+
+    public String translateToRange(int number) {
         int lowerBound = (number / 10) * 10;
         int upperBound = lowerBound + 10;
         return lowerBound + "-" + upperBound;
     }
-    //////////////////////////////////////////////////////////////////////////////////
-    public void getRecommendation(String temp) //פעולה המוציאה פריט לבוש מה- firestore ומציגה אותו כטקסט
-    {
-        db.collection("clothes").document("0-40").get().addOnCompleteListener(task->{
-            DocumentSnapshot documentSnapshot= task.getResult(); //משיג את הדוח מה-Firestore
-            if (documentSnapshot.exists())
-            {
-                Map<String,Object> data = documentSnapshot.getData();
-                if (data!=null && !data.isEmpty())
-                {
-                    int index=0;
-                    Object value= data.get(String.valueOf(temp));
-                    if (value!=null)
-                    {
-                        recommendationTv.setText(value.toString()); //הגדרת הטקסט לפי המספר הרנדומלי
-                    }
-                    else
-                    {
-                        recommendationTv.setText("Error"); //הצגת שגיאה
-                    }
 
+    public void getRecommendation(String temp) {
+        db.collection("clothes").document("0-40").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Map<String, Object> data = documentSnapshot.getData();
+                    if (data != null && !data.isEmpty()) {
+                        Object value = data.get(temp);
+                        if (value != null) {
+                            recommendationTv.setText(value.toString());
+                        } else {
+                            recommendationTv.setText("No recommendation found.");
+                        }
+                    }
+                } else {
+                    recommendationTv.setText("No data found.");
                 }
+            } else {
+                recommendationTv.setText("Error fetching data.");
             }
-        }
-        );
+        });
     }
-    //////////////////////////////////////////////////////////////////////////////////
-    public void logout(View view) //הפעלת קישוריות בין כפתור הLog out - למסך ה- Main
-    {
+
+    public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this, Login_Activity.class));
         finish();
     }
-    //////////////////////////////////////////////////////////////////////////////////
-    public void backMain(View view) //הפעלת קישוריות בין כפתור הBack main - למסך ה- Main
-    {
+
+    public void backMain(View view) {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

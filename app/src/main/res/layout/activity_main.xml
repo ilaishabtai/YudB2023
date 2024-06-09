@@ -20,17 +20,17 @@
 
     <TextView
         android:id="@+id/forecastDataTv"
-        android:layout_width="217dp"
-        android:layout_height="37dp"
+        android:layout_width="203dp"
+        android:layout_height="39dp"
         android:text="text:"
         android:textColor="#25BFFD"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.242"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.608"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/firRecTitleTv"

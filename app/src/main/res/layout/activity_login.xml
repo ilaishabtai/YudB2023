@@ -39,12 +39,14 @@
         android:textColorHighlight="#23BCFD"
         android:textColorHint="#23BCFD"
         android:textColorLink="#23BDFE"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.448" />
+        app:layout_constraintVertical_bias="0.448"
+        android:hint = "Enter Email"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -57,11 +59,13 @@
         android:textColorHighlight="#23BCFD"
         android:textColorHint="#23BCFD"
         android:textColorLink="#23BCFD"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/wallpaper2"
         app:layout_constraintStart_toStartOf="@+id/wallpaper2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
+        app:layout_constraintVertical_bias="0.54"
+        android:hint = "Enter Password"/>
 
     <Button
         android:id="@+id/login_Text"
